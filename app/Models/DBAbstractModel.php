@@ -40,10 +40,11 @@ abstract class DBAbstractModel
     {
    
         if (self::$db_host === null) {
-            self::$db_host = $_ENV['DBHOST'] ?? 'localhost';
-            self::$db_user = $_ENV['DBUSER'] ?? 'root';
-            self::$db_pass = $_ENV['DBPASS'] ?? '';
-            self::$db_name = $_ENV['DBNAME'] ?? '';
+            self::$db_host = $_ENV['DB_HOST'] ?? 'localhost';
+            self::$db_user = $_ENV['DB_USER'] ?? 'root';
+            self::$db_pass = $_ENV['DB_PASS'] ?? '';
+            self::$db_name = $_ENV['DB_NAME'] ?? '';
+            self::$db_port = $_ENV['DB_PORT'] ?? '3306';
         }
     }
 
