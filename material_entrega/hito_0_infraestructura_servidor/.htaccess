@@ -1,0 +1,20 @@
+# Configuración del .htaccess para nuestro proyecto MVC
+
+# Activamos el motor de reescritura de Apache. Sin esto, nada de lo siguiente funcionaría.
+# Básicamente le decimos al servidor "oye, voy a cambiar cómo se ven las URLs"
+RewriteEngine On
+
+# Evitamos que la gente pueda ver el listado de archivos de nuestras carpetas.
+# Si no ponemos esto y alguien entra a /assets, vería TODOS los archivos. Mal asunto.
+Options -Indexes
+
+# Aquí le decimos: "solo reescribe la URL si lo que piden NO es un archivo real"
+RewriteCond %{REQUEST_FILENAME} !-f
+# Y también: "tampoco lo hagas si es una carpeta que existe de verdad"
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirección limpia al Front Controller
+# Todo lo que no sea un archivo o carpeta real, que vaya a index.php
+# [L] significa "última regla, no sigas buscando" y [QSA] mantiene los parámetros GET
+RewriteRule ^ index.php [L,QSA]
+
