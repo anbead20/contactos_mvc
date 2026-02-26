@@ -178,11 +178,6 @@ $requiredDirs = [
     PUBLIC_DIR . '/assets/img',
     VIEWS_DIR . '/errors'
 ];
-foreach ($requiredDirs as $dir) {
-    if (!is_dir($dir)) {
-        mkdir($dir, 0755, true);
-    }
-}
 
 
 /**
