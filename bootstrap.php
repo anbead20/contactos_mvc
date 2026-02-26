@@ -159,13 +159,25 @@ if (APP_ENV === 'dev' || APP_ENV === 'development') {
  * - logs/: Para guardar errores y registros de la aplicación
  * - cache/: Para archivos temporales y caché
  * - public/uploads/contactos/: Para las fotos de perfil de contactos
+ * - public/assets/css/: Para hojas de estilo
+ * - public/assets/js/: Para scripts JavaScript
+ * - public/assets/img/: Para imágenes
+ * - views/errors/: Para vistas de error
  * 
  * El 0755 son los permisos Unix:
  * - 7 (propietario): lectura, escritura y ejecución
  * - 5 (grupo): lectura y ejecución
  * - 5 (otros): lectura y ejecución
  */
-$requiredDirs = [APP_ROOT . '/logs', APP_ROOT . '/cache', PUBLIC_DIR . '/uploads/contactos'];
+$requiredDirs = [
+    APP_ROOT . '/logs', 
+    APP_ROOT . '/cache', 
+    PUBLIC_DIR . '/uploads/contactos',
+    PUBLIC_DIR . '/assets/css',
+    PUBLIC_DIR . '/assets/js',
+    PUBLIC_DIR . '/assets/img',
+    VIEWS_DIR . '/errors'
+];
 foreach ($requiredDirs as $dir) {
     if (!is_dir($dir)) {
         mkdir($dir, 0755, true);
