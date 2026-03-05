@@ -53,7 +53,7 @@ $router->post('/contactos/crear', [ContactoController::class, 'storeAction']);
 */
 $router->get('/contactos/editar/{id}', [ContactoController::class, 'editAction']);
 $router->post('/contactos/editar/{id}', [ContactoController::class, 'updateAction']);
-$router->post('/contactos/borrar/{id}', [ContactoController::class, 'deleteAction']);
+$router->post('/contactos/eliminar/{id}', [ContactoController::class, 'deleteAction']);
 
 
 // --- Proceso de Despacho ---

@@ -8,9 +8,9 @@
                 </a>
             </div>
 
-            <?php if ($generalError): ?>
+            <?php if (isset($general_error)): ?>
                 <div class="alert alert-danger shadow-sm">
-                    <i class="fas fa-exclamation-triangle"></i> <?= htmlspecialchars($generalError) ?>
+                    <i class="fas fa-exclamation-triangle"></i> <?= htmlspecialchars($general_error) ?>
                 </div>
             <?php endif; ?>
 

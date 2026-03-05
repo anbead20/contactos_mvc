@@ -16,13 +16,25 @@
 */
 function diasTranscurridos(string $fecha): string 
 {
-    $fechaInicio = new DateTime($fecha);
-    $hoy = new DateTime();
-    $diferencia = $hoy->diff($fechaInicio);
+    if (empty($fecha)) {
+        return 'Fecha no disponible';
+    }
     
-    $dias = $diferencia->days;
-
-    if ($dias === 0) return "Creado hoy";
-    if ($dias === 1) return "Creado ayer";
-    return "Hace $dias días";
+    try {
+        $fechaCreacion = new DateTime($fecha);
+        $ahora = new DateTime();
+        $diferencia = $ahora->diff($fechaCreacion);
+        
+        if ($diferencia->y > 0) {
+            return $diferencia->y . ' año' . ($diferencia->y > 1 ? 's' : '');
+        } elseif ($diferencia->m > 0) {
+            return $diferencia->m . ' mes' . ($diferencia->m > 1 ? 'es' : '');
+        } elseif ($diferencia->d > 0) {
+            return $diferencia->d . ' día' . ($diferencia->d > 1 ? 's' : '');
+        } else {
+            return 'Hoy';
+        }
+    } catch (Exception $e) {
+        return 'Fecha inválida';
+    }
 }

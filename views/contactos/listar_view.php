@@ -27,18 +27,18 @@
 <?php endif; ?>
 
     <h1 class="mb-4">
-        <?= htmlspecialchars($data['titulo']) ?>
+        <?= htmlspecialchars($titulo) ?>
         <a href="<?= BASE_URL ?>/contactos/crear" class="text-success" title="Agregar contacto">
             <i class="fas fa-plus-circle"></i>
         </a>
     </h1>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <form action="<?= BASE_URL ?>/contactos/search" method="get" class="flex-grow-1">
+        <form action="<?= BASE_URL ?>/contactos" method="get" class="flex-grow-1">
             <div class="input-group">
                 <input type="text" class="form-control" name="q"
                        placeholder="Buscar contactos..."
-                       value="<?= htmlspecialchars($data['filtros']['q'] ?? '') ?>">
+                       value="<?= htmlspecialchars($filtros['q'] ?? '') ?>">
                 <button class="btn btn-primary" type="submit">
                     <i class="fas fa-search"></i> Buscar
                 </button>
@@ -46,13 +46,13 @@
         </form>
     </div>
 
-    <?php if (empty($data['contactos'])): ?>
+    <?php if (empty($contactos)): ?>
         <div class="alert alert-info text-center">
             <i class="fas fa-info-circle"></i> No hay contactos disponibles.
         </div>
     <?php else: ?>
         <div class="row">
-            <?php foreach ($data['contactos'] as $contacto): ?>
+            <?php foreach ($contactos as $contacto): ?>
                 <?php include __DIR__ . '/partials/contacto_card.php'; ?>
             <?php endforeach; ?>
         </div>

@@ -4,15 +4,15 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1><i class="fas fa-user-edit text-warning"></i> <?= htmlspecialchars($data['titulo']) ?></h1>
+                <h1><i class="fas fa-user-edit text-warning"></i> <?= htmlspecialchars($titulo) ?></h1>
                 <a href="<?= BASE_URL ?>/contactos/ver/<?= $id ?>" class="btn btn-outline-secondary">
                     <i class="fas fa-times"></i> Cancelar
                 </a>
             </div>
 
-            <?php if (isset($data['general_error'])): ?>
+            <?php if (isset($general_error)): ?>
                 <div class="alert alert-danger shadow-sm">
-                    <i class="fas fa-exclamation-triangle"></i> <?= htmlspecialchars($data['general_error']) ?>
+                    <i class="fas fa-exclamation-triangle"></i> <?= htmlspecialchars($general_error) ?>
                 </div>
             <?php endif; ?>
 

@@ -137,6 +137,30 @@ class ContactoController extends BaseController
      * 
      * FIN TAREA
     */
+        try {
+            $detalle = $this->contactoService->obtenerContacto($id);
+            
+            if (!$detalle) {
+                $this->mostrarError("El contacto solicitado no existe.", 404);
+                return;
+            }
+            
+            $form = [
+                'nombre' => $detalle['contacto']['nombre'],
+                'telefono' => $detalle['contacto']['telefono'],
+                'email' => $detalle['contacto']['email']
+            ];
+            
+            $form = $this->contactoForm->sanitizeForOutput($form);
+            
+            $this->renderHTML(VIEWS_DIR . '/contactos/editar_view.php', [
+                'titulo' => 'Editar contacto',
+                'form' => $form,
+                'id' => $id
+            ]);
+        } catch (DatabaseException $e) {
+            $this->mostrarErrorDB($e->getMessage());
+        }
     }
 
 
@@ -149,6 +173,43 @@ class ContactoController extends BaseController
      * 
      * FIN TAREA
     */
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect('/contactos/ver/' . $id);
+            return;
+        }
+
+        $datos = $_POST;
+        $validacion = $this->contactoForm->validate($datos);
+
+        if (!$validacion['is_valid']) {
+            $this->renderHTML(VIEWS_DIR . '/contactos/editar_view.php', [
+                'titulo' => 'Corregir datos del contacto',
+                'form'   => $this->contactoForm->sanitizeForOutput($validacion['form']),
+                'errors' => $this->contactoForm->sanitizeForOutput($validacion['errors']),
+                'id'     => $id
+            ]);
+            return;
+        }
+
+        try {
+            $actualizado = $this->contactoService->actualizarContacto($id, $validacion['data']);
+            
+            if (!$actualizado) {
+                $this->mostrarError("El contacto no pudo ser actualizado.", 404);
+                return;
+            }
+            
+            $this->redirect('/contactos?success=updated');
+        } catch (DatabaseException $e) {
+            $this->renderHTML(VIEWS_DIR . '/contactos/editar_view.php', [
+                'titulo'        => 'Error de persistencia',
+                'form'          => $this->contactoForm->sanitizeForOutput($validacion['form']),
+                'general_error' => 'No se pudo actualizar el contacto. Intente de nuevo más tarde.',
+                'id'            => $id
+            ]);
+        } catch (\Exception $e) {
+            $this->mostrarError("Ocurrió un error crítico: " . $e->getMessage(), 500);
+        }
     }
 
     public function deleteAction(int $id): void
@@ -160,5 +221,19 @@ class ContactoController extends BaseController
      * 
      * FIN TAREA
     */
+        try {
+            $eliminado = $this->contactoService->eliminarContacto($id);
+            
+            if (!$eliminado) {
+                $this->mostrarError("El contacto no pudo ser eliminado.", 404);
+                return;
+            }
+            
+            $this->redirect('/contactos?success=deleted');
+        } catch (DatabaseException $e) {
+            $this->mostrarError("Error al eliminar el contacto: " . $e->getMessage(), 500);
+        } catch (\Exception $e) {
+            $this->mostrarError("Ocurrió un error crítico: " . $e->getMessage(), 500);
+        }
     }
 }

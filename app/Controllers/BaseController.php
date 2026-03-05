@@ -48,6 +48,9 @@ class BaseController {
          * FIN TAREA
         */ 
 
+        // Extraer las variables del array $data para uso directo en la vista
+        extract($data, EXTR_SKIP);
+        
         ob_start();
         include $fileName;
         $content = ob_get_clean();
@@ -80,5 +83,9 @@ class BaseController {
 
         include VIEWS_DIR . '/errors/general_error.php';
         exit;
+    }
+    
+    protected function mostrarErrorDB($mensaje) {
+        $this->mostrarError("Error de base de datos: " . $mensaje, 500);
     }
 }

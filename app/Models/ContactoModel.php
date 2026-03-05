@@ -146,12 +146,16 @@ class ContactoModel extends DBAbstractModel
     */
         try {
             $this->query = "DELETE FROM contactos WHERE id = :id";
-            $params = [':id' => $id];
-            $this->executeQuery($params);
-            return $this->rowCount() > 0;
-        } catch (\PDOException $e) {
-            error_log("Error en delete: " . $e->getMessage());
-            throw new DatabaseException("Error al eliminar el contacto: " . $e->getMessage());
+            $this->parametros = ['id' => $id];
+            $this->execute_single_query();
+            
+            $this->mensaje = 'Contacto eliminado correctamente';
+            return $this->affected_rows > 0;
+            
+        } catch (\Exception $e) {
+            $error = new DatabaseException("Error en BD: " . $e->getMessage());
+            $error->logError();
+            throw $error;
         }
     }
 

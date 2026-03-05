@@ -36,7 +36,7 @@
                         </a>
                     </div>
                     
-                    <form action="/contactos/eliminar/<?= $contacto['id'] ?>" 
+                    <form action="<?= BASE_URL ?>/contactos/eliminar/<?= $contacto['id'] ?>" 
                           method="POST" 
                           class="d-inline" 
                           onsubmit="return confirm('¿Está seguro de eliminar a <?= htmlspecialchars($contacto['nombre']) ?>?');">

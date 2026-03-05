@@ -37,6 +37,22 @@ CREATE TABLE contactos (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
+-- Tabla: user
+-- ============================================
+-- Almacena la información de los usuarios
+-- ============================================
+
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(255) NOT NULL UNIQUE,
+    password INT NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
+    
+    -- Índice para búsqueda por usuario
+    INDEX idx_usuario (usuario)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
 -- Datos de ejemplo (Opcional)
 -- ============================================
 -- Descomentar para insertar datos de prueba
@@ -63,3 +79,4 @@ INSERT INTO contactos (nombre, telefono, email) VALUES
 SELECT 'Base de datos creada correctamente' AS mensaje;
 SHOW TABLES;
 DESCRIBE contactos;
+DESCRIBE user;
