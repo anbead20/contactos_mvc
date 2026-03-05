@@ -46,7 +46,7 @@ class Router
 
     private function addRoute(string $method, string $path, array $handler, array $middlewares = []): void
     {
-        $normalizedPath = $this->basePath . '/' . ltrim($path, '/');
+        $normalizedPath = '/' . ltrim($path, '/');
         $pattern = $this->convertPathToRegex($normalizedPath);
 
         $this->routes[] = [

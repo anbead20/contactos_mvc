@@ -13,7 +13,7 @@
  * 3. Encuentra la ruta que coincide con la petición actual
  * 4. Despacha la petición al controlador apropiado
  * 
- * @author Tu Nombre
+ * @author Adrián Anta Bellido
  * @version 1.0
  * 
  * FIN TAREA
@@ -33,6 +33,10 @@ use App\Controllers\IndexController;
 use App\Controllers\ContactoController;
 
 $router = new Router();
+
+// Configurar el basePath para que el Router sepa quitar /contactos_mvc/public de las URIs
+$scriptDir = str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
+$router->setBasePath($scriptDir);
 
 // --- Definición de Rutas ---
 $router->get('/', [IndexController::class, 'indexAction']);

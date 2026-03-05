@@ -136,14 +136,18 @@ class ContactoService
     public function getTotalContactos(): int 
     {
         try {
-            return $this->contactoModel->All();
+            return $this->contactoModel->countAll();
         } catch (DatabaseException $e) {
             error_log("Error en Service::getTotalContactos: " . $e->getMessage());
             throw $e;
         }
     }
 
-   
+    public function contarContactos(): int 
+    {
+        return $this->getTotalContactos();
+    }
+
     public function getUltimosContactos(int $limite = 3): array 
     {
         try {
