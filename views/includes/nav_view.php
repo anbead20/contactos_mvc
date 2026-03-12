@@ -18,7 +18,7 @@
                 <?php if (isset($_SESSION['autenticado']) && $_SESSION['autenticado']): ?>
                     <li class="nav-item">
                         <span class="navbar-text text-light mr-3">
-                            <i class="fas fa-user"></i> <?= htmlspecialchars($_SESSION['nombre'] ?? $_SESSION['usuario']) ?>
+                            <i class="fas fa-user"></i> <?= htmlspecialchars($_SESSION['usuario']) ?>
                         </span>
                     </li>
                     <li class="nav-item">
