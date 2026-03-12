@@ -208,7 +208,7 @@ class UserModel extends DBAbstractModel
     {
         try {
             $this->query = "SELECT COUNT(*) as total FROM usuarios WHERE usuario = :usuario";
-            $this->parametros['usuario'] = $usuario;
+            $this->parametros = ['usuario' => $usuario];
             $result = $this->get_single_result();
             
             return ($result['total'] ?? 0) > 0;
@@ -227,7 +227,7 @@ class UserModel extends DBAbstractModel
     {
         try {
             $this->query = "SELECT COUNT(*) as total FROM usuarios WHERE email = :email";
-            $this->parametros['email'] = $email;
+            $this->parametros = ['email' => $email];
             $result = $this->get_single_result();
             
             return ($result['total'] ?? 0) > 0;
