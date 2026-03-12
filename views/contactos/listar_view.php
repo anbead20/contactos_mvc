@@ -8,6 +8,7 @@
                 'created' => 'Contacto creado con éxito.',
                 'updated' => 'Contacto actualizado correctamente.',
                 'deleted' => 'Contacto eliminado correctamente.',
+                'login'   => '¡Bienvenido! Sesión iniciada correctamente.',
                 default   => 'Operación realizada con éxito.'
             };
         ?>
@@ -28,10 +29,23 @@
 
     <h1 class="mb-4">
         <?= htmlspecialchars($titulo) ?>
-        <a href="<?= BASE_URL ?>/contactos/crear" class="text-success" title="Agregar contacto">
-            <i class="fas fa-plus-circle"></i>
-        </a>
+        <?php if (isset($_SESSION['autenticado']) && $_SESSION['autenticado']): ?>
+            <a href="<?= BASE_URL ?>/contactos/crear" class="text-success" title="Agregar contacto">
+                <i class="fas fa-plus-circle"></i>
+            </a>
+        <?php endif; ?>
     </h1>
+
+    <?php if (!isset($_SESSION['autenticado']) || !$_SESSION['autenticado']): ?>
+        <div class="alert alert-info shadow-sm">
+            <i class="fas fa-info-circle"></i> 
+            <strong>Modo de solo lectura:</strong> 
+            <a href="<?= BASE_URL ?>/auth/login" class="alert-link">Inicia sesión</a> 
+            o 
+            <a href="<?= BASE_URL ?>/auth/registro" class="alert-link">regístrate</a> 
+            para poder añadir, editar y eliminar contactos.
+        </div>
+    <?php endif; ?>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <form action="<?= BASE_URL ?>/contactos" method="get" class="flex-grow-1">

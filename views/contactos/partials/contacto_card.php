@@ -31,19 +31,23 @@
                             <i class="fas fa-eye"></i>
                         </a>
                         
-                        <a href="<?= BASE_URL ?>/contactos/editar/<?= $contacto['id'] ?>" class="btn btn-sm btn-outline-warning" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
+                        <?php if (isset($_SESSION['autenticado']) && $_SESSION['autenticado']): ?>
+                            <a href="<?= BASE_URL ?>/contactos/editar/<?= $contacto['id'] ?>" class="btn btn-sm btn-outline-warning" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        <?php endif; ?>
                     </div>
                     
-                    <form action="<?= BASE_URL ?>/contactos/eliminar/<?= $contacto['id'] ?>" 
-                          method="POST" 
-                          class="d-inline" 
-                          onsubmit="return confirm('¿Está seguro de eliminar a <?= htmlspecialchars($contacto['nombre']) ?>?');">
-                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
-                            <i class="fas fa-trash"></i> Borrar
-                        </button>
-                    </form>
+                    <?php if (isset($_SESSION['autenticado']) && $_SESSION['autenticado']): ?>
+                        <form action="<?= BASE_URL ?>/contactos/eliminar/<?= $contacto['id'] ?>" 
+                              method="POST" 
+                              class="d-inline" 
+                              onsubmit="return confirm('¿Está seguro de eliminar a <?= htmlspecialchars($contacto['nombre']) ?>?');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                <i class="fas fa-trash"></i> Borrar
+                            </button>
+                        </form>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

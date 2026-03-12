@@ -12,9 +12,11 @@
             <div class="card shadow-sm mb-4 border-primary">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0"><i class="fas fa-id-card"></i> Datos del Contacto</h5>
-                    <a href="<?= BASE_URL ?>/contactos/editar/<?= $contacto['id'] ?>" class="btn btn-light btn-sm font-weight-bold">
-                        <i class="fas fa-edit text-warning"></i> Editar Datos
-                    </a>
+                    <?php if (isset($_SESSION['autenticado']) && $_SESSION['autenticado']): ?>
+                        <a href="<?= BASE_URL ?>/contactos/editar/<?= $contacto['id'] ?>" class="btn btn-light btn-sm font-weight-bold">
+                            <i class="fas fa-edit text-warning"></i> Editar Datos
+                        </a>
+                    <?php endif; ?>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -73,21 +75,23 @@
                 </div>
             </div>
             
-            <div class="card shadow-sm border-danger mt-3">
-                <div class="card-header bg-light">
-                    <h5 class="mb-0 text-danger"><i class="fas fa-exclamation-triangle"></i> Zona de peligro</h5>
+            <?php if (isset($_SESSION['autenticado']) && $_SESSION['autenticado']): ?>
+                <div class="card shadow-sm border-danger mt-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0 text-danger"><i class="fas fa-exclamation-triangle"></i> Zona de peligro</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="small text-muted mb-3">Esta acción no se puede deshacer</p>
+                        <form action="<?= BASE_URL ?>/contactos/eliminar/<?= $contacto['id'] ?>" 
+                              method="POST" 
+                              onsubmit="return confirm('¿Está seguro de eliminar permanentemente a <?= htmlspecialchars($contacto['nombre']) ?>? Esta acción no se puede deshacer.');">
+                            <button type="submit" class="btn btn-danger btn-block">
+                                <i class="fas fa-trash-alt"></i> Eliminar contacto
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p class="small text-muted mb-3">Esta acción no se puede deshacer</p>
-                    <form action="<?= BASE_URL ?>/contactos/eliminar/<?= $contacto['id'] ?>" 
-                          method="POST" 
-                          onsubmit="return confirm('¿Está seguro de eliminar permanentemente a <?= htmlspecialchars($contacto['nombre']) ?>? Esta acción no se puede deshacer.');">
-                        <button type="submit" class="btn btn-danger btn-block">
-                            <i class="fas fa-trash-alt"></i> Eliminar contacto
-                        </button>
-                    </form>
-                </div>
-            </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

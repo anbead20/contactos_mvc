@@ -1,6 +1,15 @@
 
 
 <div class="container mt-5">
+    <?php if (isset($_GET['success']) && $_GET['success'] === 'logout'): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> Sesión cerrada correctamente. ¡Hasta pronto!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php endif; ?>
+    
     <div class="jumbotron bg-white border shadow-sm">
         <div class="row align-items-center">
             <div class="col-md10">
@@ -39,9 +48,11 @@
                     <h5 class="mb-0 text-dark">
                         <i class="fas fa-history text-warning mr-2"></i> Añadidos recientemente
                     </h5>
-                    <a href="<?= BASE_URL ?>/contactos/crear" class="btn btn-success btn-sm font-weight-bold">
-                        <i class="fas fa-plus mr-1"></i> Nuevo Contacto
-                    </a>
+                    <?php if (isset($_SESSION['autenticado']) && $_SESSION['autenticado']): ?>
+                        <a href="<?= BASE_URL ?>/contactos/crear" class="btn btn-success btn-sm font-weight-bold">
+                            <i class="fas fa-plus mr-1"></i> Nuevo Contacto
+                        </a>
+                    <?php endif; ?>
                 </div>
                 <div class="card-body p-0">
                     <?php if (empty($data['ultimos'])): ?>

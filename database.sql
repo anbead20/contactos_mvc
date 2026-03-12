@@ -37,19 +37,23 @@ CREATE TABLE contactos (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
--- Tabla: user
+-- Tabla: usuarios
 -- ============================================
 -- Almacena la información de los usuarios
 -- ============================================
 
-CREATE TABLE user (
+CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario VARCHAR(255) NOT NULL UNIQUE,
-    password INT NOT NULL,
-    nombre VARCHAR(255) NOT NULL,
+    usuario VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
-    -- Índice para búsqueda por usuario
-    INDEX idx_usuario (usuario)
+    -- Índices para búsqueda
+    INDEX idx_usuario (usuario),
+    INDEX idx_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================
@@ -79,4 +83,4 @@ INSERT INTO contactos (nombre, telefono, email) VALUES
 SELECT 'Base de datos creada correctamente' AS mensaje;
 SHOW TABLES;
 DESCRIBE contactos;
-DESCRIBE user;
+DESCRIBE usuarios;

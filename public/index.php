@@ -31,6 +31,8 @@ use App\Core\Router;
 use App\Core\Dispatcher;
 use App\Controllers\IndexController;
 use App\Controllers\ContactoController;
+use App\Controllers\AuthController;
+use App\Middleware\AuthMiddleware;
 
 $router = new Router();
 
@@ -38,22 +40,27 @@ $router = new Router();
 $scriptDir = str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
 $router->setBasePath($scriptDir);
 
-// --- Definición de Rutas ---
+// --- Rutas Públicas (no requieren autenticación) ---
 $router->get('/', [IndexController::class, 'indexAction']);
+
+// Rutas de autenticación
+$router->get('/auth/login', [AuthController::class, 'loginAction']);
+$router->post('/auth/login', [AuthController::class, 'loginPostAction']);
+$router->get('/auth/registro', [AuthController::class, 'registroAction']);
+$router->post('/auth/registro', [AuthController::class, 'registroPostAction']);
+$router->get('/auth/logout', [AuthController::class, 'logoutAction']);
+
+// Rutas de visualización de contactos (públicas - todos pueden ver)
 $router->get('/contactos', [ContactoController::class, 'indexAction']);
 $router->get('/contactos/ver/{id}', [ContactoController::class, 'showAction']);
-$router->get('/contactos/crear', [ContactoController::class, 'createAction']);
-$router->post('/contactos/crear', [ContactoController::class, 'storeAction']);
-/*****************************************************
- * TAREA 3
- * 
- * Incluye las rutas necesarias para la edición y el borrado. 
- * 
- * FIN TAREA
-*/
-$router->get('/contactos/editar/{id}', [ContactoController::class, 'editAction']);
-$router->post('/contactos/editar/{id}', [ContactoController::class, 'updateAction']);
-$router->post('/contactos/eliminar/{id}', [ContactoController::class, 'deleteAction']);
+
+// --- Rutas Protegidas (requieren autenticación) ---
+// Solo usuarios autenticados pueden crear, editar y eliminar contactos
+$router->get('/contactos/crear', [ContactoController::class, 'createAction'], [AuthMiddleware::class]);
+$router->post('/contactos/crear', [ContactoController::class, 'storeAction'], [AuthMiddleware::class]);
+$router->get('/contactos/editar/{id}', [ContactoController::class, 'editAction'], [AuthMiddleware::class]);
+$router->post('/contactos/editar/{id}', [ContactoController::class, 'updateAction'], [AuthMiddleware::class]);
+$router->post('/contactos/eliminar/{id}', [ContactoController::class, 'deleteAction'], [AuthMiddleware::class]);
 
 
 // --- Proceso de Despacho ---

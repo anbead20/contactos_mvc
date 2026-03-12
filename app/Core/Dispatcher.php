@@ -28,12 +28,30 @@ class Dispatcher
 
         [$controllerName, $actionName] = $route['handler'];
         $params = $route['params'] ?? [];
+        $middlewares = $route['middlewares'] ?? [];
 
+        // Ejecutar middlewares
+        foreach ($middlewares as $middlewareClass) {
+            if (!class_exists($middlewareClass)) {
+                return $this->handleError("El middleware '$middlewareClass' no existe.");
+            }
+
+            $middleware = new $middlewareClass();
+            
+            if (!method_exists($middleware, 'handle')) {
+                return $this->handleError("El middleware '$middlewareClass' no tiene método 'handle'.");
+            }
+
+            // Si el middleware retorna false, detener la ejecución
+            $result = $middleware->handle();
+            if ($result === false) {
+                return;
+            }
+        }
 
         if (!class_exists($controllerName)) {
             return $this->handleError("El controlador '$controllerName' no existe.");
         }
-
 
         $controller = new $controllerName();
 

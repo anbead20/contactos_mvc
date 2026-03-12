@@ -148,6 +148,18 @@ if (APP_ENV === 'dev' || APP_ENV === 'development') {
     ini_set('display_errors', 0);
 }
 
+/*****************************************************
+ * INICIAR SESIONES
+ * 
+ * Inicia las sesiones PHP para permitir el sistema de autenticación.
+ * Solo se inicia si no hay una sesión activa previamente.
+ * 
+ * FIN TAREA
+*/
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 /**
  * MANTENIMIENTO DE DIRECTORIOS
  * 
